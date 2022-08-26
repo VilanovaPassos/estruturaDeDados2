@@ -1,0 +1,7 @@
+EXERCÍCIO 1
+
+Pre-ordem: A, B, D, C, E, F
+
+In-ordem: B, D, A, E, C, F
+
+Pos-ordem: D, B, E, F, C, A
