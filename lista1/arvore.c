@@ -26,29 +26,108 @@ void arv_libera (Arvore* a) {
 }
 
 //========= Exercício 2 - pré-ordem ====
-
+void preOrdem(Arvore* a)
+{
+   if (!verifica_arv_vazia(a))
+   {
+      printf("%c, ", a->info);
+      preOrdem(a->esq);
+      preOrdem(a->dir);  
+   }
+}
 
 //========= Exercício 2 - in-ordem ====
+void inOrdem(Arvore* a)
+{
+   if (!verifica_arv_vazia(a))
+   {
+      inOrdem(a->esq);
+      printf("%c, ", a->info);
+      inOrdem(a->dir);  
+   }
+}
 
 
 //========= Exercício 2 - pós-ordem ====
+void posOrdem(Arvore* a)
+{
+   if (!verifica_arv_vazia(a))
+   {
+      posOrdem(a->esq);
+      posOrdem(a->dir);  
+      printf("%c, ", a->info);
+   }
+}
 
 
 //========= Exercício 3 - pertence ====
-
+int pertence_arv(Arvore* a, char c)
+{
+   if (!verifica_arv_vazia(a))
+   {
+      if (a->info == c)
+      {
+         return 1;
+      }
+      else if(pertence_arv(a->esq, c) || pertence_arv(a->dir, c))
+      {
+         return 1;
+      }
+   }
+   
+   return 0;
+}
 
 //========= Exercício 4 - conta nós ====
+int conta_nos(Arvore* a)
+{
+   if (!verifica_arv_vazia(a))
+   {
+      return 1 + (conta_nos(a->esq) + conta_nos(a->dir));
+   }
 
+   return 0;
+   
+}
 
 //========= Exercício 5 - calcula altura ====
+int calcula_altura_arvore(Arvore* a)
+{
+   if (!verifica_arv_vazia(a))
+   {
+      int n1 = calcula_altura_arvore(a->esq);
+      int n2 = calcula_altura_arvore(a->dir);
 
+      return 1 + ( (n1 >= n2) ? n1 : n2);
+   }
+
+   return 0;
+   
+}
 
 
 //========= Exercício 6 - conta folhas ====
+int conta_nos_folha(Arvore* a)
+{
+   if (!verifica_arv_vazia(a))
+   {
+      if ((a->esq == NULL) && (a->dir == NULL))
+      {
+         return 1;
+      }
+      else
+      {
+         return (conta_nos_folha(a->esq) + conta_nos_folha(a->dir));
+      }
+   }
+   
+   return 0;
+}
 
 
 
-int main (int argc, char *argv[]) {
+int main (int argc, char *argv[]) 
+{
 
    Arvore *a = constroi_arv ('a',
        constroi_arv('b',
@@ -60,6 +139,35 @@ int main (int argc, char *argv[]) {
        constroi_arv('f',cria_arv_vazia(),cria_arv_vazia())
      )
    );	
+
+   //exrecicio 2
+   printf("Pre-Ordem: \n");
+   preOrdem(a);
+
+   printf("\n\nIn-Ordem: \n");
+   inOrdem(a);
+
+   printf("\n\nPos-Ordem: \n");
+   posOrdem(a);
+
+   //exercicio 3
+   if (pertence_arv(a, 'e'))
+   {
+      printf("\n\n e esta na arvore");
+   }
+   else
+   {
+      printf("\n\ne nao pertence a arvore");
+   }
+
+   //exercicio 4
+   printf("\n\nA arvore tem %d", conta_nos(a));
+
+   //exercicio 5
+   printf("\n\nO tamanho da arvore e %d", calcula_altura_arvore(a));
+   
+   //exercicio 6
+   printf("\n\nA arvore tem %d nos folhas", conta_nos_folha(a));
 
    arv_libera (a);
 
