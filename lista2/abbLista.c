@@ -1,4 +1,6 @@
+#include <time.h>
 #include "abbLista.h"
+
 
 
 Arvore* cria_arvore_vazia (void) 
@@ -121,7 +123,7 @@ int buscar (Arvore *a, int v)
 }
 
 //========= Q2 - min =====
-int Min(Arvore* a, int v)
+int min(Arvore* a) //retorna valor minimo ou NULL se arvore estiver vazia
 {
     int n = NULL;
     Arvore* aux;
@@ -140,11 +142,51 @@ int Min(Arvore* a, int v)
 }
 
 //========= Q2 - max =====
+int max(Arvore* a) //retorna valor maximo ou NULL se arvore estiver vazia
+{
+    int n = NULL;
+    Arvore* aux;
+
+    aux = a;
+
+    while (aux != NULL)
+    {
+        n = a->info;
+
+        aux = aux->dir;
+    }
+
+    return n;
+    
+}
 
 //========= Q3 - imprime_decrescente =====
+void imprimeDecrescente(Arvore* a)
+{
+   if (a != NULL)
+   {
+      imprimeDecrescente(a->dir);
+      printf("%d, ", a->info);
+      imprimeDecrescente(a->esq);  
+   }
+}
+
 
 
 //========= Q4 - maior ramo =====
+int maiorRamo(Arvore* a)
+{
+   if (a != NULL)
+   {
+      int n1 = maiorRamo(a->esq);
+      int n2 = maiorRamo(a->dir);
+
+      return a->info + ( (n1 >= n2) ? n1 : n2);
+   }
+
+   return 0;
+   
+}
 
 
 void pre_order (Arvore* a) 
@@ -164,22 +206,32 @@ int main ()
     Arvore *a = cria_arvore_vazia ();
 
     //inserir
-    //....
+    /*
     a = inserir(a, 50);
     a = inserir(a, 30);
     a = inserir(a, 90);
     a = inserir(a, 20);
+    a = inserir(a, 40);
+    a = inserir(a, 95);
+    a = inserir(a, 10);
+    a = inserir(a, 35);
+    a = inserir(a, 45);
 
     printf("\n");
     pre_order (a);	
     printf("\n");
 
+    //busca valor a arvore
     if (buscar(a, 40))
     {
         printf("40 esta na arvore\n");
     }
+     else
+    {
+        printf("90 nao esta na arvore");
+    }
     
-
+    //remove
     remover(a, 90);
 
     printf("\n");
@@ -190,8 +242,56 @@ int main ()
     {
         printf("90 esta na arvore\n");
     }
+    else
+    {
+        printf("90 nao esta na arvore");
+    }
+    
+    //imprime maior e menor chave
+    printf("O menor valor na arvore é $d\n\n", min(a));
+    printf("O menor valor na arvore é $d\n\n", min(a));
+
+    //imprime decrescente
+    imprimeDecrescente(a);
+    //maior ramo
+    printf("\n\nmaior ramo %d", maiorRamo(a));
+    */
 
     // ====== Q5 ====
+    // insere 10000 valores em sequencia 
+    /*
+    for (int i = 0; i < 10000; i++)
+    {
+        a = inserir(a, i);
+    }
+
+    if (buscar(a, 10000))
+    {
+        printf("10000 esta na arvore\n");
+    }
+     else
+    {
+        printf("10000 nao esta na arvore");
+    }
+    
+
+    //numeros aleatorios
+    srand(time(NULL));
+     for (int i = 0; i < 10000; i++)
+    {
+        a = inserir(a, (rand()%10000));
+    }
+
+    if (buscar(a, 10000))
+    {
+        printf("10000 esta na arvore\n");
+    }
+     else
+    {
+        printf("10000 nao esta na arvore");
+    }
+
+    */
 
     arvore_libera(a);
     return 0;
