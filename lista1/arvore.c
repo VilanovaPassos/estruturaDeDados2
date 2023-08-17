@@ -43,8 +43,8 @@ void inOrdem(Arvore *a)
     if (!verifica_arv_vazia(a))
     {
         inOrdem(a->esq);
-        inOrdem(a->dir);
         printf("%c", a->info);
+        inOrdem(a->dir);
     }
     
 }
@@ -55,8 +55,8 @@ void posOrdem(Arvore *a)
     if (!verifica_arv_vazia(a))
     {
         posOrdem(a->esq);
-        printf("%c", a->info);
         posOrdem(a->dir);
+        printf("%c", a->info);
     }
     
 }
@@ -72,7 +72,7 @@ int pertence_arv (Arvore *a, char c)
         }
         else
         {
-            return (pertence_arv(a->esq, c) + pertence_arv(a->dir, c));
+            return (pertence_arv(a->esq, c) || pertence_arv(a->dir, c));
         }
         
     }
